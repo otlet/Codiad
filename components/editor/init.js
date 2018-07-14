@@ -27,6 +27,7 @@
     // modes available for selecting
     var availableTextModes = new Array(
         'abap',
+		'abc',
         'actionscript',
         'ada',
         'apache_conf',
@@ -51,13 +52,18 @@
         'django',
         'dockerfile',
         'dot',
+		'eiffel',
         'ejs',
+		'elixir',
+		'elm',
         'erlang',
         'forth',
         'ftl',
+		'gcode',
         'gherkin',
         'gitignore',
         'glsl',
+		'gobstones',
         'golang',
         'groovy',
         'haml',
@@ -65,8 +71,10 @@
         'haskell',
         'haxe',
         'html',
+		'html_elixir',
         'html_ruby',
         'ini',
+		'io',
         'jack',
         'jade',
         'java',
@@ -77,6 +85,7 @@
         'jsx',
         'julia',
         'latex',
+		'lean',
         'less',
         'liquid',
         'lisp',
@@ -86,13 +95,17 @@
         'lua',
         'luapage',
         'lucene',
-        'matlab',
         'makefile',
         'markdown',
+		'mask',
+		'matlab',
+		'maze',
         'mel',
+		'mips_assembler',
         'mushcode',
         'mysql',
         'nix',
+		'nsis',
         'objectivec',
         'ocaml',
         'pascal',
@@ -101,12 +114,15 @@
         'php',
         'plain_text',
         'powershell',
+		'praat',
         'prolog',
         'protobuf',
         'python',
         'r',
+		'razor',
         'rdoc',
         'rhtml',
+		'rst',
         'ruby',
         'rust',
         'sass',
@@ -121,20 +137,24 @@
         'soy_template',
         'space',
         'sql',
+		'sqlserver',
         'stylus',
         'svg',
+		'swift',
+		'swig',
         'tcl',
         'tex',
         'text',
         'textile',
         'toml',
-        'typescript',
         'twig',
+		'typescript',
         'vala',
         'vbscript',
         'velocity',
         'verilog',
         'vhdl',
+		'wollok',
         'xml',
         'xquery',
         'yaml'
@@ -369,6 +389,7 @@
             theme: 'twilight',
             fontSize: '13px',
             printMargin: false,
+            printMarginColumn: 80,
             highlightLine: true,
             indentGuides: true,
             wrapMode: false,
@@ -436,6 +457,15 @@
                        }
                        _this.settings[key] = (localValue == 'true');
                    });
+            $.each(['printMarginColumn'],
+                function(idx, key) {
+                    var localValue =
+                        localStorage.getItem('codiad.editor.' + key);
+                    if (localValue === null) {
+                        return;
+                    }
+                    _this.settings[key] = localValue;
+                });
         },
 
         /////////////////////////////////////////////////////////////////
@@ -454,6 +484,7 @@
             // Apply the current configuration settings:
             i.setTheme('ace/theme/' + this.settings.theme);
             i.setFontSize(this.settings.fontSize);
+            i.setPrintMarginColumn(this.settings.printMarginColumn);
             i.setShowPrintMargin(this.settings.printMargin);
             i.setHighlightActiveLine(this.settings.highlightLine);
             i.setDisplayIndentGuides(this.settings.indentGuides);
@@ -1016,6 +1047,29 @@
 
         //////////////////////////////////////////////////////////////////
         //
+        // Set print margin column
+        //
+        // Parameters:
+        //   p - {Number} print margin column
+        //   i - {Editor}  (If omitted, Defaults to all editors)
+        //
+        //////////////////////////////////////////////////////////////////
+
+        setPrintMarginColumn: function(p, i) {
+            if (i) {
+                i.setPrintMarginColumn(p);
+            } else {
+                this.settings.printMarginColumn = p;
+                this.forEach(function(i) {
+                    i.setPrintMarginColumn(p);
+                });
+            }
+            // LocalStorage
+            localStorage.setItem('codiad.editor.printMarginColumn', p);
+        },
+
+        //////////////////////////////////////////////////////////////////
+        //
         // Show/Hide indent guides
         //
         // Parameters:
@@ -1141,10 +1195,10 @@
 
         setTabSize: function(s, i) {
             if (i) {
-                i.getSession().setTabSize(s);
+                i.getSession().setTabSize(parseInt(s));
             } else {
                 this.forEach(function(i) {
-                    i.getSession().setTabSize(s);
+                    i.getSession().setTabSize(parseInt(s));
                 });
             }
             // LocalStorage

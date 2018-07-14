@@ -11,7 +11,9 @@
         <td>
         
         <select class="setting" data-setting="codiad.editor.theme">
+            <option value="ambiance">Ambiance</option>
             <option value="chaos">Chaos</option>
+            <option value="chrome">Chrome</option>
             <option value="clouds">Clouds</option>
             <option value="clouds_midnight">Clouds - Midnight</option>
             <option value="cobalt">Cobalt</option>
@@ -21,8 +23,10 @@
             <option value="eclipse">Eclipse</option>
             <option value="github">GitHub</option>
             <option value="idle_fingers">Idle Fingers</option>
+            <option value="iplastic">IPlastic</option>
             <option value="katzenmilch">Katzenmilch</option>
             <option value="kuroir">Kuroir</option>
+            <option value="kr_theme">krTheme</option>
             <option value="merbivore">Merbivore</option>
             <option value="merbivore_soft">Merbivore Soft</option>
             <option value="mono_industrial">Mono Industrial</option>
@@ -30,6 +34,7 @@
             <option value="pastel_on_dark">Pastel On Dark</option>
             <option value="solarized_dark">Solarized Dark</option>
             <option value="solarized_light">Solarized Light</option>
+            <option value="sqlserver">SQL Server</option>
             <option value="terminal">Terminal</option>
             <option value="textmate">Textmate</option>
             <option value="tomorrow">Tomorrow</option>
@@ -39,6 +44,7 @@
             <option value="tomorrow_night_eighties">Tomorrow Night Eighties</option>
             <option value="twilight" selected>Twilight</option>
             <option value="vibrant_ink">Vibrant Ink</option>
+            <option value="xcode">XCode</option>
         </select>
         
         </td>
@@ -98,6 +104,26 @@
         <select class="setting" data-setting="codiad.editor.printMargin">
             <option value="true"><?php i18n("Show"); ?></option>
             <option value="false" selected><?php i18n("Hide"); ?></option>
+        </select>
+        
+        </td>
+        
+    </tr>
+    <tr>
+    
+        <td><?php i18n("Print Margin Column"); ?></td>
+        <td>
+        
+        <select class="setting" data-setting="codiad.editor.printMarginColumn">
+            <option value="80" selected>80</option>
+            <option value="85">85</option>
+            <option value="90">90</option>
+            <option value="95">95</option>
+            <option value="100">100</option>
+            <option value="105">105</option>
+            <option value="110">110</option>
+            <option value="115">115</option>
+            <option value="120">120</option>
         </select>
         
         </td>

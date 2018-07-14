@@ -259,15 +259,7 @@
                     $.each(listResponse, function(index, data) {
                         codiad.filemanager.openFile(data.path, data.focused);
                     });
-                    // Run resize command to fix render issues
-                    codiad.editor.resize();
                 }
-            });
-
-            // Run resize on window resize
-            $(window).resize(function() {
-                codiad.editor.resize();
-                _this.updateTabDropdownVisibility();
             });
 
             // Prompt if a user tries to close window without saving all filess
@@ -324,7 +316,7 @@
         //////////////////////////////////////////////////////////////////
 
         check: function(path) {
-            $.get(this.controller + '?action=check&path=' + path,
+            $.get(this.controller + '?action=check&path=' + encodeURIComponent(path),
 
             function(data) {
                 var checkResponse = codiad.jsend.parse(data);
@@ -357,7 +349,7 @@
 
             this.updateTabDropdownVisibility();
 
-            $.get(this.controller + '?action=add&path=' + path);
+            $.get(this.controller + '?action=add&path=' + encodeURIComponent(path));
 
             if(focus) {
                 this.focus(path);
@@ -525,7 +517,7 @@
             var session = this.sessions[path];
             var closeFile = true;
             if (session.listThumb.hasClass('changed')) {
-                codiad.modal.load(450, 'components/active/dialog.php?action=confirm&path=' + path);
+                codiad.modal.load(450, 'components/active/dialog.php?action=confirm&path=' + encodeURIComponent(path));
                 closeFile = false;
             }
             if (closeFile) {
@@ -625,7 +617,7 @@
                 this.focus(nextPath);
             }
             delete this.sessions[path];
-            $.get(this.controller + '?action=remove&path=' + path);
+            $.get(this.controller + '?action=remove&path=' + encodeURIComponent(path));
             this.removeDraft(path);
         },
 
@@ -687,7 +679,7 @@
                     }
                 }
             }
-            $.get(this.controller + '?action=rename&old_path=' + oldPath + '&new_path=' + newPath, function() {
+            $.get(this.controller + '?action=rename&old_path=' + encodeURIComponent(oldPath) + '&new_path=' + encodeURIComponent(newPath), function() {
                 /* Notify listeners. */
                 amplify.publish('active.onRename', {"oldPath": oldPath, "newPath": newPath});
             });
